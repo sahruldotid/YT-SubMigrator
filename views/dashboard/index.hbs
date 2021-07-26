@@ -1,0 +1,131 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>YT-SubMigrator</title>
+    <meta name="description" content="Ela Admin - HTML5 Admin Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
+    <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="/stylesheets/dashboard.css">
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+</head>
+
+<body class="open">
+    <!-- Right Panel -->
+    <div id="right-panel" class="right-panel">
+        <!-- Header-->
+        <header id="header" class="header">
+            <div class="top-left">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="./"><img src="logo.png" alt="Logo"></a>
+                </div>
+            </div>
+            <div class="top-right">
+                <div class="header-menu">
+                    <div class="user-area dropdown float-right">
+                        <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            {{#each me.photos}}
+                            <img class="user-avatar rounded-circle" src="{{this.url}}" alt="User Avatar">
+                            {{/each}}
+                        </a>
+                        <div class="user-menu dropdown-menu">
+                            {{#each me.names}}
+                            <a class="nav-link" href="#"><i class="fa fa-user"></i>{{this.givenName}}</a>
+                            {{/each}}
+                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i>Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- /#header -->
+        <!-- Content -->
+        <div class="content">
+            <!-- Animated -->
+            <div class="animated fadeIn">
+                <div class="clearfix"></div>
+                <!-- Orders -->
+                <div class="orders">
+                    <div class="row">
+                        <div class="col-xl">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h4 class="box-title">Subscription List </h4>
+                                            <h4 class="box-title">Total : <span class="count">{{yt.pageInfo.totalResults}}</span></h4>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-secondary mt-sm-2 float-right ml-3" id="download">Download List</button>
+                                            <button type="button" class="btn btn-primary mt-sm-2 float-right" id="upload" >Upload List</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body--">
+                                    <div class="table-stats order-table ov-h">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="serial">#</th>
+                                                    <th>Avatar</th>
+                                                    <th class="text-center">Name</th>
+                                                    <th class="text-center">Short Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {{#each yt.items}}
+                                                <tr>
+                                                    <td class="serial">{{@index}}.</td>
+                                                    <td class="name">
+                                                        <div class="round-img">
+                                                            <a href="#"><img class="rounded-circle" src="{{this.snippet.thumbnails.default.url}}" alt=""></a>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center"> <span class="name">{{this.snippet.title}}</span> </td>
+                                                    <td class="text-center"> <span class="product">{{slice this.snippet.description}}</span> </td>
+                                                </tr>
+                                                {{/each}}
+                                            </tbody>
+                                        </table>
+                                    </div> <!-- /.table-stats -->
+                                </div>
+                            </div> <!-- /.card -->
+                        </div> <!-- /.col-lg-8 -->
+
+
+                    </div>
+                </div>
+
+            </div>
+            <!-- .animated -->
+        </div>
+        <!-- /.content -->
+        <div class="clearfix"></div>
+    </div>
+    <!-- /#right-panel -->
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+    <script src="/javascripts/main.js"></script>
+</body>
+
+</html>

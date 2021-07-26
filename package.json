@@ -1,0 +1,42 @@
+{
+  "name": "yt-submigrator",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "watch": "nodemon -e js,css,json,hbs,svg,jpg,png --ignore public "
+  },
+  "dependencies": {
+    "@google-cloud/local-auth": "^1.0.1",
+    "connect-livereload": "^0.6.1",
+    "cookie-parser": "~1.4.4",
+    "cookie-session": "^1.4.0",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "flatted": "^3.2.1",
+    "googleapis": "^82.0.0",
+    "hbs": "~4.0.4",
+    "http-errors": "~1.6.3",
+    "livereload": "^0.9.3",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.12",
+    "open": "^8.2.1",
+    "server-destroy": "^1.0.1"
+  },
+  "description": "Migrating your youtube subscription to another account.",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sahruldotid/YT-SubMigrator.git"
+  },
+  "keywords": [
+    "Migrator"
+  ],
+  "author": "sahruldotid",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sahruldotid/YT-SubMigrator/issues"
+  },
+  "homepage": "https://github.com/sahruldotid/YT-SubMigrator#readme"
+}
