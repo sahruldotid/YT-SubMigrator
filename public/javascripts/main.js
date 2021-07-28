@@ -3,15 +3,12 @@ $.noConflict();
 jQuery(document).ready(function($) {
 
 	"use strict";
-
 	[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
 		new SelectFx(el);
 	});
-
 	jQuery('.selectpicker').selectpicker;
 
 
-	
 
 	$('.search-trigger').on('click', function(event) {
 		event.preventDefault();
@@ -29,8 +26,6 @@ jQuery(document).ready(function($) {
 		property: 'max-height'
 	});
 
-	// var chartsheight = $('.flotRealtime2').height();
-	// $('.traffic-chart').css('height', chartsheight-122);
 
 
 	// Counter Number
@@ -47,8 +42,7 @@ jQuery(document).ready(function($) {
 	});
 
 
-	 
-	 
+
 	// Menu Trigger
 	$('#menuToggle').on('click', function(event) {
 		var windowWidth = $(window).width();   		 
@@ -63,10 +57,8 @@ jQuery(document).ready(function($) {
 			$('body').toggleClass('open');
 			$('#left-panel').removeClass('open-menu');  
 		} 
-			 
 	}); 
 
-	 
 	$(".menu-item-has-children.dropdown").each(function() {
 		$(this).on('click', function() {
 			var $temp_text = $(this).children('.dropdown-toggle').html();
@@ -89,7 +81,35 @@ jQuery(document).ready(function($) {
 	$('#download').on('click', function (event) {
 		event.preventDefault();
 		window.location.href = '/download-data-as-json';
-		
 	});
 
+	$('#upload').click(function () {
+		$('#file').click();
+	});
+
+	$('#file').on('change', () => {
+		let file = $('input[type=file]').get(0).files[0];
+		if (file){
+			let reader = new FileReader();
+			reader.addEventListener("load", e => {
+				let sub = JSON.parse(reader.result)
+				let data = sub.map(element => {
+					return element.snippet.resourceId.channelId
+				});
+				$.ajax({
+					type: 'POST',
+					url: '/insert',
+					data: {
+						data: JSON.stringify(data)
+					},
+					success: function(msg) {
+						alert(msg);
+						
+					}
+				});
+				
+			});
+			reader.readAsText(file);
+		}
+	});
 });

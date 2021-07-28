@@ -17,6 +17,9 @@ Handlebars.registerHelper('slice', function (aString) {
   return aString.slice(0, 50);
 })
 
+Handlebars.registerHelper("inc", function (value, options) {
+  return parseInt(value) + 1;
+});
 
 // livereload
 const liveReloadServer = livereload.createServer();

@@ -10,7 +10,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>YT-SubMigrator</title>
-    <meta name="description" content="Ela Admin - HTML5 Admin Template">
+    <meta name="description" content="YT-SubMigrator">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
     <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
@@ -74,6 +74,7 @@
                                         <div class="col">
                                             <button type="button" class="btn btn-secondary mt-sm-2 float-right ml-3" id="download">Download List</button>
                                             <button type="button" class="btn btn-primary mt-sm-2 float-right" id="upload" >Upload List</button>
+                                            <input type="file" name="jsonData" size="chars" id="file" class="inp">
                                         </div>
                                     </div>
                                 </div>
@@ -91,7 +92,7 @@
                                             <tbody>
                                                 {{#each yt.items}}
                                                 <tr>
-                                                    <td class="serial">{{@index}}.</td>
+                                                    <td class="serial">{{inc @index}}.</td>
                                                     <td class="name">
                                                         <div class="round-img">
                                                             <a href="#"><img class="rounded-circle" src="{{this.snippet.thumbnails.default.url}}" alt=""></a>

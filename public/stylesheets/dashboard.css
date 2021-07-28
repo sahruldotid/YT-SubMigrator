@@ -3300,25 +3300,11 @@ footer.site-footer .footer-inner a {
   }
 }
 
-#cellPaiChart {
-  height: 160px;
-}
-
-#cellPaiChart .pieLabel {
-  top: 50px !important;
-}
-
-#cellPaiChart .pieLabel div {
-  font-size: 16px !important;
-}
-
-#cellPaiChart #pieLabel1 {
-  left: 20px !important;
-}
-
-#cellPaiChart #pieLabel0 {
-  left: inherit !important;
-  right: 20px !important;
+.inp{
+  display: block;
+  visibility: hidden;
+  width: 0;
+  height: 0;
 }
 
 /*# sourceMappingURL=style.css.map */

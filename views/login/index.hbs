@@ -29,36 +29,19 @@
 
             <!-- Login Form -->
             <form>
-                {{!-- <div class="mt-4 mb-5 mx-auto fadeIn second d-flex align-items-center justify-content-center" data-accesstype="offline" data-redirecturi="http://localhost:3000/oauth2callback"
-
-                    id="my-signin2"></div>
-                    <div id="gSignInWrapper">
-                        <span class="label">Sign in with:</span>
+                    <div id="gSignInWrapper" class="mt-4 mb-5 fadeIn first" onclick="location.href='/auth'">
+                        <span class="label">Sign in with: </span>
                         <div id="customBtn" class="customGPlusSignIn">
                             <span class="icon"></span>
                             <span class="buttonText">Google</span>
                         </div>
                     </div>
-                    <div id="name"></div>
-                    <script>startApp();</script> --}}
-                {{!-- <div id="my-signin2" class="mt-4 mb-5 mx-auto fadeIn first d-flex align-items-center justify-content-center"></div> --}}
-                {{!-- <button id="signinButton" class="mt-4 mb-5 mx-auto fadeIn first d-flex align-items-center justify-content-center">Sign in with Google</button> --}}
-                <a href="/auth">LOGIN</a>
-                {{!-- <a href="#" class="mt-4 mb-5 mx-auto fadeIn second d-flex align-items-center justify-content-center"
-                    onclick="signOut();" id="signout">Sign out</a> --}}
-              
-
-                
             </form>
 
 
         </div>
     </div>
     <!-- partial -->
-    {{!--
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script> --}}
 
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/javascripts/login.js"></script>

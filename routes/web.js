@@ -1,3 +1,5 @@
+//CHAOTIC CODE LMAO,, I DONT HAVE MUCH TIME :( . MAYBE NEXT TIME ILL REFACTOR THIS 
+
 'use strict';
 
 var stream = require('stream');
@@ -6,17 +8,19 @@ const path = require('path');
 const url = require('url');
 const {google} = require('googleapis');
 var express = require('express');
+const { route } = require('../app');
 var router = express.Router();
 const youtube = google.youtube('v3');
 const people = google.people('v1');
 
-const scopes = [
-        'https://www.googleapis.com/auth/youtube.readonly',
-        'profile',
-];
 
 var yt;
 var me;
+
+const scopes = [
+        'https://www.googleapis.com/auth/youtube',
+        'profile',
+];
 
 
 const keyPath = path.join(__dirname, '../oauth2.keys.json');
@@ -40,7 +44,7 @@ google.options({
     auth: oauth2Client
 });
 
-function getYT(num, nextToken) {
+function getYT(num, nextToken, rest) {
     return youtube.subscriptions.list({
         part: 'snippet',
         mine: true,
@@ -49,14 +53,35 @@ function getYT(num, nextToken) {
         pageToken: nextToken,
     });
 }
-const storeData = (data, path) => {
-    try {
-        fs.writeFileSync(path, JSON.stringify(data))
-    } catch (err) {
-        console.error(err)
+
+async function getAllYT() {
+    let data = await getYT(50);
+    data = data.data;
+    let sub = data.items;
+    let token = data.nextPageToken;
+    while (token) {
+        let tmp = await getYT(50, token);
+        sub = [...sub, ...tmp.data.items];
+        token = tmp.data.nextPageToken;
     }
+    
+    return sub;
 }
 
+function storeYT(channel_id){
+    return youtube.subscriptions.insert({
+        part: ['snippet'],
+        resource: {
+            snippet: {
+                resourceId: {
+                    kind: "youtube#channel",
+                    channelId : channel_id,
+                }
+            }
+        }
+        
+    });
+}
 
 
 router.get('/', function (req, res, next) {
@@ -74,19 +99,16 @@ router.get('/oauth2callback', async function (req, res, next) {
     res.redirect('/dashboard');
 });
 
-// router.post('/oauth2callback', (req, res) => {
-//     console.log(req.body);
-// });
+
 
 
 //TODO ADD MIDDLEWARE
 router.get('/dashboard', async function (req, res, next) {
-    // res.redirect('/download-data-as-json');
     me = await people.people.get({
         resourceName: 'people/me',
         personFields: 'names,photos',
-    });
-    yt = await getYT(25);
+    }).catch(() => res.redirect('/auth'));
+    yt = await getYT(25).catch(() => res.redirect('/auth'));
     
     res.render('dashboard', {
         yt: yt.data,
@@ -96,19 +118,31 @@ router.get('/dashboard', async function (req, res, next) {
 });
 
 
-router.get('/download-data-as-json', async (req, res) => {
 
-
-    let data = await getYT(50);
-    data = data.data;
-    let sub = data.items;
-    let token = data.nextPageToken;
-    while (token) {
-        let tmp = await getYT(50, token);
-        sub = [...sub, ...tmp.data.items];
-        token = tmp.data.nextPageToken;
+router.post('/insert', async (req, res) => {
+    let sub = await getAllYT();
+    let channelNow = sub.map(element => {
+        return element.snippet.resourceId.channelId
+    })
+    let importedData = JSON.parse(req.body.data);
+    let newChannel = importedData.filter(x => !channelNow.includes(x));
+    let msg = "nothing to migrate";
+    if(newChannel){
+        for (const [i, value] of newChannel.entries()) {
+            if (!await storeYT(value)){
+                break;
+            }
+            msg = `Successful migrating ${i+1} subscriptions`;
+        }
     }
-    // LMAO HARD TO UNDERSTAND RIGHT ? :V (ILL REFACTOR THIS CODE NEXT TIME :p)
+    res.status(200)
+        .send(msg);
+});
+
+
+// Need to reduce what object properties are important to dump
+router.get('/download-data-as-json', async (req, res) => {
+    let sub = await getAllYT();
     let filename = me.data.names;
     filename = filename[0].givenName;
     res.status(200)
